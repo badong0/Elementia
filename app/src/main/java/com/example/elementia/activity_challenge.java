@@ -2,6 +2,7 @@ package com.example.elementia;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -39,8 +40,15 @@ public class activity_challenge extends AppCompatActivity {
     private void setupQuizButton() {
         // Set click listener on the LinearLayout (which acts as the quiz button)
         quizButtonLayout.setOnClickListener(v -> {
-            Intent intent = new Intent(activity_challenge.this, activity_quiz.class);
-            startActivity(intent);
+            Log.d("Navigation", "Quiz button clicked!");
+            try {
+                Intent intent = new Intent(activity_challenge.this, activity_difficulty.class);
+                startActivity(intent);
+                Log.d("Navigation", "Intent started successfully");
+            } catch (Exception e) {
+                Log.e("Navigation", "Error starting activity: " + e.getMessage());
+                e.printStackTrace();
+            }
         });
     }
 

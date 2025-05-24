@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
@@ -19,6 +21,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,6 +54,8 @@ public class activity_quiz extends AppCompatActivity {
     private static final String PREFS_NAME = "QuizPrefs";
     private static final String HIGH_SCORE_KEY = "high_score";
 
+    private String currentDifficulty = activity_difficulty.DIFFICULTY_EASY; // Default
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,9 +68,15 @@ public class activity_quiz extends AppCompatActivity {
             return insets;
         });
 
+        // Get difficulty from intent
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra(activity_difficulty.DIFFICULTY_EXTRA)) {
+            currentDifficulty = intent.getStringExtra(activity_difficulty.DIFFICULTY_EXTRA);
+        }
+
         initializeViews();
         loadHighScore();
-        setupQuestions();
+        setupQuestions(); // This will now use difficulty
         setupClickListeners();
         setupBottomNavigation();
         startQuiz();
@@ -123,59 +134,77 @@ public class activity_quiz extends AppCompatActivity {
     private void setupQuestions() {
         questions = new ArrayList<>();
 
-        // Element Symbol Questions
-        questions.add(new QuizQuestion("What is the chemical symbol for Gold?",
-                new String[]{"Au", "Ag", "Gd", "Go"}, 0));
-        questions.add(new QuizQuestion("What is the chemical symbol for Iron?",
-                new String[]{"Ir", "Fe", "In", "I"}, 1));
-        questions.add(new QuizQuestion("What is the chemical symbol for Silver?",
-                new String[]{"Si", "S", "Ag", "Al"}, 2));
-        questions.add(new QuizQuestion("What is the chemical symbol for Sodium?",
-                new String[]{"So", "Na", "N", "S"}, 1));
+        // Easy Questions (Basic symbols and common elements)
+        if (currentDifficulty.equals(activity_difficulty.DIFFICULTY_EASY)) {
+            questions.add(new QuizQuestion("What is the chemical symbol for Gold?",
+                    new String[]{"Au", "Ag", "Gd", "Go"}, 0));
+            questions.add(new QuizQuestion("What is the chemical symbol for Iron?",
+                    new String[]{"Ir", "Fe", "In", "I"}, 1));
+            questions.add(new QuizQuestion("What is the chemical symbol for Silver?",
+                    new String[]{"Si", "S", "Ag", "Al"}, 2));
+            questions.add(new QuizQuestion("What is the chemical symbol for Sodium?",
+                    new String[]{"So", "Na", "N", "S"}, 1));
+            questions.add(new QuizQuestion("Which element is essential for breathing?",
+                    new String[]{"Nitrogen", "Oxygen", "Carbon", "Hydrogen"}, 1));
+            questions.add(new QuizQuestion("Which element is used in balloons to make them float?",
+                    new String[]{"Hydrogen", "Oxygen", "Helium", "Nitrogen"}, 2));
+            questions.add(new QuizQuestion("Which element is essential for strong bones?",
+                    new String[]{"Iron", "Calcium", "Magnesium", "Potassium"}, 1));
+            questions.add(new QuizQuestion("What is water made of?",
+                    new String[]{"Hydrogen and Oxygen", "Hydrogen and Carbon", "Oxygen and Carbon", "Nitrogen and Oxygen"}, 0));
+            questions.add(new QuizQuestion("Which element makes plants green?",
+                    new String[]{"Iron", "Magnesium", "Calcium", "Potassium"}, 1));
+            questions.add(new QuizQuestion("What is the most common gas in Earth's atmosphere?",
+                    new String[]{"Oxygen", "Carbon dioxide", "Nitrogen", "Argon"}, 2));
+        }
 
-        // Element Properties Questions
-        questions.add(new QuizQuestion("Which element is the lightest?",
-                new String[]{"Helium", "Hydrogen", "Lithium", "Carbon"}, 1));
-        questions.add(new QuizQuestion("Which element makes up most of Earth's atmosphere?",
-                new String[]{"Oxygen", "Carbon dioxide", "Nitrogen", "Argon"}, 2));
-        questions.add(new QuizQuestion("Which element is essential for photosynthesis?",
-                new String[]{"Nitrogen", "Phosphorus", "Carbon", "Sulfur"}, 2));
-        questions.add(new QuizQuestion("Which is the most abundant element in the universe?",
-                new String[]{"Oxygen", "Hydrogen", "Carbon", "Helium"}, 1));
+        // Medium Questions (Properties, groups, and some advanced concepts)
+        else if (currentDifficulty.equals(activity_difficulty.DIFFICULTY_MEDIUM)) {
+            questions.add(new QuizQuestion("Which element is the lightest?",
+                    new String[]{"Helium", "Hydrogen", "Lithium", "Carbon"}, 1));
+            questions.add(new QuizQuestion("Which group do Noble Gases belong to?",
+                    new String[]{"Group 17", "Group 18", "Group 1", "Group 2"}, 1));
+            questions.add(new QuizQuestion("What are elements in Group 1 called?",
+                    new String[]{"Noble gases", "Halogens", "Alkali metals", "Alkaline earth metals"}, 2));
+            questions.add(new QuizQuestion("In the mnemonic 'Happy Cats Never Offer Fish', what does 'H' represent?",
+                    new String[]{"Helium", "Hydrogen", "Hafnium", "Holmium"}, 1));
+            questions.add(new QuizQuestion("Which element is commonly used in smoke detectors?",
+                    new String[]{"Uranium", "Plutonium", "Americium", "Radium"}, 2));
+            questions.add(new QuizQuestion("Which element has the chemical symbol 'Pb'?",
+                    new String[]{"Phosphorus", "Lead", "Platinum", "Polonium"}, 1));
+            questions.add(new QuizQuestion("What is the most abundant element in the universe?",
+                    new String[]{"Oxygen", "Hydrogen", "Carbon", "Helium"}, 1));
+            questions.add(new QuizQuestion("Which element is essential for photosynthesis?",
+                    new String[]{"Nitrogen", "Phosphorus", "Carbon", "Sulfur"}, 2));
+            questions.add(new QuizQuestion("Which mnemonic helps remember Noble Gases?",
+                    new String[]{"Happy Cats Never Offer Fish", "He Never Asked King Xerxes", "Little Naomi Keeps Rubbing", "Be My Cat She's Big"}, 1));
+            questions.add(new QuizQuestion("Which element is liquid at room temperature?",
+                    new String[]{"Gallium", "Mercury", "Cesium", "Francium"}, 1));
+        }
 
-        // Element Uses Questions
-        questions.add(new QuizQuestion("Which element is used in balloons to make them float?",
-                new String[]{"Hydrogen", "Oxygen", "Helium", "Nitrogen"}, 2));
-        questions.add(new QuizQuestion("Which element is essential for strong bones and teeth?",
-                new String[]{"Phosphorus", "Calcium", "Magnesium", "Potassium"}, 1));
-
-        // Group/Period Questions
-        questions.add(new QuizQuestion("Which group do Noble Gases belong to?",
-                new String[]{"Group 17", "Group 18", "Group 1", "Group 2"}, 1));
-        questions.add(new QuizQuestion("What are elements in Group 1 called?",
-                new String[]{"Noble gases", "Halogens", "Alkali metals", "Alkaline earth metals"}, 2));
-
-        // Mnemonic-based Questions
-        questions.add(new QuizQuestion("In the mnemonic 'Happy Cats Never Offer Fish', what does 'H' represent?",
-                new String[]{"Helium", "Hydrogen", "Hafnium", "Holmium"}, 1));
-        questions.add(new QuizQuestion("Which mnemonic helps remember Noble Gases?",
-                new String[]{"Happy Cats Never Offer Fish", "He Never Asked King Xerxes", "Little Naomi Keeps Rubbing", "Be My Cat She's Big"}, 1));
-
-        // Radioactivity Questions
-        questions.add(new QuizQuestion("Which element is commonly used in smoke detectors?",
-                new String[]{"Uranium", "Plutonium", "Americium", "Radium"}, 2));
-
-        // Additional challenging questions
-        questions.add(new QuizQuestion("What is the densest naturally occurring element?",
-                new String[]{"Lead", "Gold", "Platinum", "Osmium"}, 3));
-        questions.add(new QuizQuestion("Which element has the highest melting point?",
-                new String[]{"Carbon", "Tungsten", "Iron", "Titanium"}, 1));
-        questions.add(new QuizQuestion("Which element is liquid at room temperature besides Mercury?",
-                new String[]{"Gallium", "Bromine", "Cesium", "Francium"}, 1));
-        questions.add(new QuizQuestion("What does the 'lanthanide' series refer to?",
-                new String[]{"Transition metals", "Rare earth elements", "Noble gases", "Halogens"}, 1));
-        questions.add(new QuizQuestion("Which element is named after a planet?",
-                new String[]{"Plutonium", "Neptunium", "Uranium", "All of the above"}, 3));
+        // Hard Questions (Advanced properties, rare elements, complex concepts)
+        else if (currentDifficulty.equals(activity_difficulty.DIFFICULTY_HARD)) {
+            questions.add(new QuizQuestion("What is the densest naturally occurring element?",
+                    new String[]{"Lead", "Gold", "Platinum", "Osmium"}, 3));
+            questions.add(new QuizQuestion("Which element has the highest melting point?",
+                    new String[]{"Carbon", "Tungsten", "Iron", "Titanium"}, 1));
+            questions.add(new QuizQuestion("Which element is liquid at room temperature besides Mercury?",
+                    new String[]{"Gallium", "Bromine", "Cesium", "Francium"}, 1));
+            questions.add(new QuizQuestion("What does the 'lanthanide' series refer to?",
+                    new String[]{"Transition metals", "Rare earth elements", "Noble gases", "Halogens"}, 1));
+            questions.add(new QuizQuestion("Which element is named after a planet?",
+                    new String[]{"Plutonium", "Neptunium", "Uranium", "All of the above"}, 3));
+            questions.add(new QuizQuestion("Which element has the chemical symbol 'W'?",
+                    new String[]{"Wolfram", "Tungsten", "Both A and B", "Neither"}, 2));
+            questions.add(new QuizQuestion("What is the rarest naturally occurring element?",
+                    new String[]{"Francium", "Astatine", "Promethium", "Technetium"}, 1));
+            questions.add(new QuizQuestion("Which element was first discovered in the sun?",
+                    new String[]{"Hydrogen", "Helium", "Neon", "Argon"}, 1));
+            questions.add(new QuizQuestion("Which synthetic element is named after Einstein?",
+                    new String[]{"Einsteinium", "Fermium", "Nobelium", "Mendelevium"}, 0));
+            questions.add(new QuizQuestion("What is the atomic number of Carbon?",
+                    new String[]{"4", "6", "8", "12"}, 1));
+        }
 
         // Shuffle questions for randomness
         Collections.shuffle(questions);
@@ -200,26 +229,6 @@ public class activity_quiz extends AppCompatActivity {
         nextButton.setOnClickListener(v -> nextQuestion());
     }
 
-    private void setupBottomNavigation() {
-        bottomNavigationView.setOnItemSelectedListener(item -> {
-            int itemId = item.getItemId();
-
-            if (itemId == R.id.elements) {
-                Intent intent = new Intent(activity_quiz.this, activity_elements.class);
-                startActivity(intent);
-                finish();
-                return true;
-            } else if (itemId == R.id.challege) {
-                // Fixed: changed from activity_challenge to activity_challege
-                Intent intent = new Intent(activity_quiz.this, activity_challenge.class);
-                startActivity(intent);
-                finish();
-                return true;
-            }
-
-            return false;
-        });
-    }
 
     private void startQuiz() {
         currentQuestionIndex = 0;
@@ -366,18 +375,24 @@ public class activity_quiz extends AppCompatActivity {
 
         String message;
         if (lives <= 0) {
-            message = "Game Over!\n\nFinal Score: " + score + "\nHigh Score: " + highScore;
+            message = "Game Over!\n\nDifficulty: " + currentDifficulty.toUpperCase() +
+                    "\nFinal Score: " + score + "\nHigh Score: " + highScore;
         } else {
-            message = "Quiz Complete!\n\nFinal Score: " + score + "\nHigh Score: " + highScore +
+            message = "Quiz Complete!\n\nDifficulty: " + currentDifficulty.toUpperCase() +
+                    "\nFinal Score: " + score + "\nHigh Score: " + highScore +
                     "\n\nWell done!";
         }
 
         new AlertDialog.Builder(this)
                 .setTitle("Quiz Finished")
                 .setMessage(message)
-                .setPositiveButton("Play Again", (dialog, which) -> restartQuiz())
+                .setPositiveButton("Play Again", (dialog, which) -> {
+                    // Go back to difficulty selection for another round
+                    Intent intent = new Intent(activity_quiz.this, activity_difficulty.class);
+                    startActivity(intent);
+                    finish();
+                })
                 .setNegativeButton("Back to Challenge", (dialog, which) -> {
-                    // Fixed: changed from activity_challenge to activity_challege
                     Intent intent = new Intent(activity_quiz.this, activity_challenge.class);
                     startActivity(intent);
                     finish();
@@ -396,19 +411,13 @@ public class activity_quiz extends AppCompatActivity {
                 .setTitle("Quit Quiz")
                 .setMessage("Are you sure you want to quit? Your progress will be lost.")
                 .setPositiveButton("Yes, Quit", (dialog, which) -> {
-                    // Fixed: changed from activity_challenge to activity_challege
-                    Intent intent = new Intent(activity_quiz.this, activity_challenge.class);
+                    // Go back to difficulty selection
+                    Intent intent = new Intent(activity_quiz.this, activity_difficulty.class);
                     startActivity(intent);
                     finish();
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Don't set any bottom navigation selection to avoid conflicts
     }
 
     @Override
@@ -440,4 +449,40 @@ public class activity_quiz extends AppCompatActivity {
             return correctAnswer;
         }
     }
+    private void setupBottomNavigation() {
+
+
+        // Set the selected item
+        bottomNavigationView.setSelectedItemId(R.id.challege);
+
+        // Force UI refresh
+        bottomNavigationView.post(() -> {
+            bottomNavigationView.invalidate();
+            bottomNavigationView.requestLayout();
+        });
+
+        // Set the listener
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+
+                if (itemId == R.id.elements) {
+                    Intent intent = new Intent(activity_quiz.this, activity_elements.class);
+                    startActivity(intent);
+                    finish();
+                    return true;
+
+                } else if (itemId == R.id.challege) {
+                    Intent intent = new Intent(activity_quiz.this, activity_challenge.class);
+                    startActivity(intent);
+                    finish();
+                    return true;
+                }
+
+                return false;
+            }
+        });
+    }
+
 }
