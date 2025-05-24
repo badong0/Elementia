@@ -8,54 +8,7 @@
     android:background="#F5F5F5"
     tools:context=".activity_elements">
 
-    <!-- Status Bar with Time -->
-    <TextView
-        android:id="@+id/timeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="9:41"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:contentDescription="Current time" />
 
-    <!-- Status Bar Signal Icons (Mock) -->
-    <LinearLayout
-        android:id="@+id/statusIcons"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="●●●"
-            android:textStyle="bold"/>
-    </LinearLayout>
-
-    <!-- Welcome Message -->
-    <TextView
-        android:id="@+id/welcomeMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_semibold"
-        android:text="Good Day! Tommy!"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timeText"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp" />
-
-    <!-- Search Bar -->
     <androidx.cardview.widget.CardView
         android:id="@+id/searchBarContainer"
         android:layout_width="match_parent"
@@ -131,6 +84,21 @@
     </LinearLayout>
 
     <!-- Elements Title -->
+
+    <TextView
+        android:id="@+id/welcomeMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Welcome to Elementia!"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/elementsTitle"
         android:layout_width="wrap_content"

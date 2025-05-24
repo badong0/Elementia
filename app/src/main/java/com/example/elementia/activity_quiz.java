@@ -56,6 +56,10 @@ public class activity_quiz extends AppCompatActivity {
 
     private String currentDifficulty = activity_difficulty.DIFFICULTY_EASY; // Default
 
+    private Handler autoAdvanceHandler;
+    private Runnable autoAdvanceRunnable;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -300,11 +304,11 @@ public class activity_quiz extends AppCompatActivity {
         updateScoreDisplay();
 
         // Auto-advance after 2 seconds if not the last question
-        new Handler().postDelayed(() -> {
-            if (currentQuestionIndex < questions.size() - 1) {
-                nextQuestion();
-            }
-        }, 2000);
+        if (currentQuestionIndex < questions.size() - 1) {
+            autoAdvanceHandler = new Handler();
+            autoAdvanceRunnable = () -> nextQuestion();
+            autoAdvanceHandler.postDelayed(autoAdvanceRunnable, 2000);
+        }
     }
 
     private String getAnswerLabel(int index) {
@@ -349,7 +353,12 @@ public class activity_quiz extends AppCompatActivity {
         answerCardView4.setClickable(true);
     }
 
+    // method to cancel auto-advance nag auto advance siya ng isang question
     private void nextQuestion() {
+        // Cancel any pending auto-advance
+        if (autoAdvanceHandler != null && autoAdvanceRunnable != null) {
+            autoAdvanceHandler.removeCallbacks(autoAdvanceRunnable);
+        }
         currentQuestionIndex++;
         showQuestion();
     }
@@ -420,10 +429,7 @@ public class activity_quiz extends AppCompatActivity {
                 .show();
     }
 
-    @Override
-    public void onBackPressed() {
-        showQuitDialog();
-    }
+
 
     // QuizQuestion class to hold question data
     private static class QuizQuestion {
@@ -483,6 +489,10 @@ public class activity_quiz extends AppCompatActivity {
                 return false;
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        showQuitDialog();
     }
 
 }
