@@ -1,0 +1,2176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    tools:context=".activity_elements">
+
+    <!-- Status Bar with Time -->
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="9:41"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Current time" />
+
+    <!-- Status Bar Signal Icons (Mock) -->
+    <LinearLayout
+        android:id="@+id/statusIcons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="●●●"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <!-- Welcome Message -->
+    <TextView
+        android:id="@+id/welcomeMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Good Day! Tommy!"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/timeText"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp" />
+
+    <!-- Search Bar -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/searchBarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="12dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/welcomeMessage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <EditText
+                android:id="@+id/searchBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="Search ..."
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@android:color/black"
+                android:textColorHint="#9E9E9E"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/searchIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="8dp"
+                android:contentDescription="Search icon"
+                android:src="@drawable/ic_search" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Mnemonics Toggle Switch -->
+    <LinearLayout
+        android:id="@+id/mnemonicsToggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchBarContainer">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Mnemonics"
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
+
+        <Switch
+            android:id="@+id/mnemonicsSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true" />
+
+    </LinearLayout>
+
+    <!-- Elements Title -->
+    <TextView
+        android:id="@+id/elementsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Elements"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchBarContainer"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp" />
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/elementsTitle"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+        android:layout_marginTop="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Reactive Nonmetal Section -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/reactiveNonmetalCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="#C8E6C9"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/reactiveNonmetalTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Reactive nonmetal"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/reactiveNonmetalMnemonic"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="Happy Cats Never Offer Fish; People Should Clean Seas, Bring Ice"
+                        android:textSize="14sp"
+                        android:textColor="#2E7D32"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Reactive Nonmetal Elements Grid -->
+            <GridLayout
+                android:id="@+id/reactiveNonmetalGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4"
+                android:rowCount="3"
+                android:useDefaultMargins="true"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp">
+
+                <!-- H Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonH"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Hydrogen"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/h" />
+
+                <!-- C Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonC"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Carbon"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/c" />
+
+                <!-- N Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonN"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Nitrogen"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/n" />
+
+                <!-- O Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonO"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Oxygen"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/o" />
+
+                <!-- F Element -->
+                <ImageButton
+                    android:id="@+id/imageButtoF"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Fluorine"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/f" />
+
+                <!-- P Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonP"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Phosphorus"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/p" />
+
+                <!-- S Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonS"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Sulfur"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/s" />
+
+                <!-- Cl Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonCl"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Chlorine"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/cl" />
+
+                <!-- Se Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonSe"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Selenium"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/se" />
+
+                <!-- Br Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonBr"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Bromine"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/br" />
+
+                <!-- I Element (Missing from your layout) -->
+                <ImageButton
+                    android:id="@+id/imageButtonI"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Iodine"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/i" />
+
+            </GridLayout>
+
+            <!-- Noble Gas Section -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/nobleGasCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="#B3E5FC"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/nobleGasTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Noble Gas"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/nobleGasMnemonic"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="He Never Asked King Xerxes Regarding Nothing"
+                        android:textSize="14sp"
+                        android:textColor="#0277BD"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Noble Gas Elements Grid -->
+            <GridLayout
+                android:id="@+id/nobleGasGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4"
+                android:rowCount="2"
+                android:useDefaultMargins="true"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp">
+
+                <!-- He Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonHe"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Helium"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/he" />
+
+                <!-- Ne Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonNe"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Neon"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ne" />
+
+                <!-- Ar Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonAr"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Argon"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ar" />
+
+                <!-- Kr Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonKr"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Krypton"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/kr" />
+
+                <!-- Xe Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonXe"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Xenon"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/xe" />
+
+                <!-- Rn Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonRn"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Radon"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/rn" />
+
+            </GridLayout>
+
+            <!-- Alkali Metal Section -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/alkaliMetalCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="#FFCDD2"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/alkaliMetalTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Alkali metal"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/alkaliMetalMnemonic"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="Little Naomi Keeps Rubbing Cats For Real"
+                        android:textSize="14sp"
+                        android:textColor="#C62828"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Alkali Metal Elements Grid -->
+            <GridLayout
+                android:id="@+id/alkaliMetalGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4"
+                android:rowCount="2"
+                android:useDefaultMargins="true"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp">
+
+
+                <ImageButton
+                    android:id="@+id/imageButtonLi"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Lithium"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/li" />
+
+                <!-- Na Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonNa"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Sodium"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/na" />
+
+                <!-- K Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonK"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Potassium"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/k" />
+
+                <!-- Rb Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonRb"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Rubidium"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/rb" />
+
+                <!-- Cs Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonCs"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Cesium"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/cs" />
+
+                <!-- Fr Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonFr"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Francium"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/fr" />
+
+            </GridLayout>
+
+            <!-- Alkaline Earth Metal Section -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/alkalineEarthMetalCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="#FFE0B2"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/alkalineEarthMetalTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Alkaline Earth Metal"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/alkalineEarthMetalMnemonic"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="Be My Cat; She's Big, Really Amazing"
+                        android:textSize="14sp"
+                        android:textColor="#E65100"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Continue with all other sections following the same pattern... -->
+            <!-- For brevity, I'll show one more complete section and indicate where others go -->
+
+            <!-- Alkaline Earth Metal Elements Grid -->
+            <GridLayout
+                android:id="@+id/alkalineEarthMetalGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4"
+                android:rowCount="2"
+                android:useDefaultMargins="true"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp">
+
+                <!-- Be Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonBe"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Beryllium"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/be" />
+
+                <!-- Mg Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonMg"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Magnesium"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/mg" />
+
+                <!-- Ca Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonCa"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Calcium"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ca" />
+
+                <!-- Sr Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonSr"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Strontium"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/sr" />
+
+                <!-- Ba Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonBa"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Barium"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ba" />
+
+                <!-- Ra Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonRa"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:contentDescription="Radium"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ra" />
+
+            </GridLayout>
+
+            <!-- Transition Metals Period 4 Section -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/transitionMetalP4Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#F7AA97"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/transitionMetalP4Title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Transition Metals (Period 4)"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/transitionMetalP4Mnemonic"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="Scary Tiny Vicious Creatures May Fear Cows Nicely Cuddling"
+                        android:textSize="14sp"
+                        android:textColor="#D84315"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+            <!-- Transition Metals Period 4 Elements Grid -->
+            <GridLayout
+                android:id="@+id/transitionMetalP4Grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4"
+                android:rowCount="3"
+                android:useDefaultMargins="true"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp">
+
+                <!-- Sc Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonSc"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Scandium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/sc" />
+
+                <!-- Ti Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonTi"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Titanium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ti" />
+
+                <!-- V Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonV"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Vanadium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/v" />
+
+                <!-- Cr Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonCr"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Chromium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/cr" />
+
+                <!-- Mn Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonMn"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Manganese"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/mn" />
+
+                <!-- Fe Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonFe"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Iron"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/fe" />
+
+                <!-- Co Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonCo"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Cobalt"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/co" />
+
+                <!-- Ni Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonNi"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Nickel"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ni" />
+
+                <!-- Cu Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonCu"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Copper"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/cu" />
+
+            </GridLayout>
+
+            <!-- Transition Metals Period 5 Section -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/transitionMetalP5Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="#F7AA97"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Transition Metals (Period 5)"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/transitionMetalP5Mnemonic"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="Young Zebras Never Moan. Tigers Run Rhyming Poems Again"
+                        android:textSize="14sp"
+                        android:textColor="#D84315"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Transition Metals Period 5 Elements Grid -->
+            <GridLayout
+                android:id="@+id/transitionMetalP5Grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4"
+                android:rowCount="3"
+                android:useDefaultMargins="true"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp">
+
+                <!-- Y Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonY"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Yttrium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/y" />
+
+                <!-- Zr Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonZr"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Zirconium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/zr" />
+
+                <!-- Nb Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonNb"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Niobium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/nb" />
+
+                <!-- Mo Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonMo"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Molybdenum"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/mo" />
+
+                <!-- Tc Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonTc"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Technetium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/tc" />
+
+                <!-- Ru Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonRu"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Ruthenium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ru" />
+
+                <!-- Rh Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonRh"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Rhodium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/rh" />
+
+                <!-- Pd Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonPd"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Palladium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/pd" />
+
+                <!-- Ag Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonAg"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Silver"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ag" />
+
+            </GridLayout>
+
+            <!-- Transition Metals Period 6 Section -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/transitionMetalP6Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="#F7AA97"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Transition Metals (Period 6)"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/transitionMetalP6Mnemonic"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="Happy Tartles Wear Red Outside, Inside Purple Aura"
+                        android:textSize="14sp"
+                        android:textColor="#D84315"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Transition Metals Period 6 Elements Grid -->
+            <GridLayout
+                android:id="@+id/transitionMetalP6Grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4"
+                android:rowCount="2"
+                android:useDefaultMargins="true"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp">
+
+                <!-- Hf Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonHf"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Hafnium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/hf" />
+
+                <!-- Ta Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonTa"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Tantalum"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ta" />
+
+                <!-- W Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonW"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Tungsten"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/w" />
+
+                <!-- Re Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonRe"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Rhenium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/re" />
+
+                <!-- Os Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonOs"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Osmium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/os" />
+
+                <!-- Ir Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonIr"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Iridium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ir" />
+
+                <!-- Pt Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonPt"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Platinum"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/pt" />
+
+                <!-- Au Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonAu"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Gold"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/au" />
+
+            </GridLayout>
+
+            <!-- Transition Metals Period 7 Section -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/transitionMetalP7Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="#F7AA97"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Transition Metals (Period 7)"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/transitionMetalP7Mnemonic"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="Really Dark Shady Boys Hide"
+                        android:textSize="14sp"
+                        android:textColor="#D84315"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Transition Metals Period 7 Elements Grid -->
+            <GridLayout
+                android:id="@+id/transitionMetalP7Grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4"
+                android:rowCount="2"
+                android:useDefaultMargins="true"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp">
+
+                <!-- Rf Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonRf"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Rutherfordium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/rf" />
+
+                <!-- Db Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonDb"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Dubnium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/db" />
+
+                <!-- Sg Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonSg"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Seaborgium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/sg" />
+
+                <!-- Bh Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonBh"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Bohrium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/bh" />
+
+                <!-- Hs Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonHs"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Hassium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/hs" />
+
+            </GridLayout>
+
+            <!-- Lanthanides Section -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/lanthanidesCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="#FF76A0"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Lanthanides"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/lanthanidesMnemonic"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="Lazy Celestials Practice New Prayers So Many Europeans Get Drink, They Don't Hold Errors, They Make Yelling Ludicrous"
+                        android:textSize="14sp"
+                        android:textColor="#C2185B"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Lanthanides Elements Grid -->
+            <GridLayout
+                android:id="@+id/lanthanidesGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4"
+                android:rowCount="4"
+                android:useDefaultMargins="true"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp">
+
+                <!-- La Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonLa"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Lanthanum"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/la" />
+
+                <!-- Ce Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonCe"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Cerium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ce" />
+
+                <!-- Pr Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonPr"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Praseodymium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/pr" />
+
+                <!-- Nd Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonNd"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Neodymium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/nd" />
+
+                <!-- Pm Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonPm"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Promethium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/pm" />
+
+                <!-- Sm Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonSm"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Samarium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/sm" />
+
+                <!-- Eu Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonEu"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Europium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/eu" />
+
+                <!-- Gd Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonGd"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Gadolinium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/gd" />
+
+                <!-- Tb Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonTb"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Terbium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/tb" />
+
+                <!-- Dy Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonDy"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Dysprosium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/dy" />
+
+                <!-- Ho Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonHo"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Holmium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ho" />
+
+                <!-- Er Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonEr"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Erbium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/er" />
+
+                <!-- Tm Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonTm"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Thulium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/tm" />
+
+                <!-- Yb Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonYb"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Ytterbium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/yb" />
+
+                <!-- Lu Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonLu"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Lutetium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/lu" />
+
+            </GridLayout>
+
+            <!-- Actinides Section -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/actinidesCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="#B5A7F9"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Actinides"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/actinidesMnemonic"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="Actually, Through Public Understanding, New People Are Coming Back California Entering Famous Main Noble Laboratories"
+                        android:textSize="14sp"
+                        android:textColor="#6A1B9A"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Actinides Elements Grid -->
+            <GridLayout
+                android:id="@+id/actinidesGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4"
+                android:rowCount="4"
+                android:useDefaultMargins="true"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp">
+
+                <!-- Ac Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonAc"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Actinium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ac" />
+
+                <!-- Th Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonTh"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Thorium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/th" />
+
+                <!-- Pa Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonPa"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Protactinium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/pa" />
+
+                <!-- U Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonU"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Uranium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/u" />
+
+                <!-- Np Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonNp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Neptunium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/np" />
+
+                <!-- Pu Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonPu"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Plutonium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/pu" />
+
+                <!-- Am Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonAm"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Americium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/am" />
+
+                <!-- Cm Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonCm"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Curium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/cm" />
+
+                <!-- Bk Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonBk"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Berkelium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/bk" />
+
+                <!-- Cf Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonCf"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Californium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/cf" />
+
+                <!-- Es Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonEs"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Einsteinium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/es" />
+
+                <!-- Fm Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonFm"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Fermium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/fm" />
+
+                <!-- Md Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonMd"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Mendelevium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/md" />
+
+                <!-- No Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonNo"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Nobelium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/no" />
+
+                <!-- Lr Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonLr"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Lawrencium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/lr" />
+
+            </GridLayout>
+
+            <!-- Post-Transition Metals Section -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/postTransitionMetalsCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="#4ADDDD"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Post-Transition Metals"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/postTransitionMetalsMnemonic"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="All Zoo Guards Can Infect Snakes, However They Probably Beat Poisonous Canaries"
+                        android:textSize="14sp"
+                        android:textColor="#006064"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Post-Transition Metals Elements Grid -->
+            <GridLayout
+                android:id="@+id/postTransitionMetalsGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4"
+                android:rowCount="3"
+                android:useDefaultMargins="true"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp">
+
+                <!-- Al Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonAl"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Aluminum"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/al" />
+
+                <!-- Zn Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonZn"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Zinc"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/zn" />
+
+                <!-- Ga Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonGa"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Gallium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ga" />
+
+                <!-- Cd Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonCd"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Cadmium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/cd" />
+
+                <!-- In Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonIn"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Indium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/in" />
+
+                <!-- Sn Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonSn"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Tin"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/sn" />
+
+                <!-- Hg Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonHg"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Mercury"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/hg" />
+
+                <!-- Tl Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonTl"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Thallium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/tl" />
+
+                <!-- Pb Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonPb"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Lead"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/pb" />
+
+                <!-- Bi Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonBi"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Bismuth"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/bi" />
+
+                <!-- Po Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonPo"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Polonium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/po" />
+
+                <!-- Cn Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonCn"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Copernicium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/cn" />
+
+            </GridLayout>
+
+            <!-- Metalloids Section -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/metalloidsCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="#FF8B6C"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Metalloids"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/metalloidsMnemonic"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="Brave Simple Girls Ask Smart Teachers All Time"
+                        android:textSize="14sp"
+                        android:textColor="#E65100"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Metalloids Elements Grid -->
+            <GridLayout
+                android:id="@+id/metalloidsGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4"
+                android:rowCount="2"
+                android:useDefaultMargins="true"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp">
+
+                <!-- B Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonB"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Boron"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/b" />
+
+                <!-- Si Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonSi"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Silicon"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/si" />
+
+                <!-- Ge Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonGe"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Germanium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ge" />
+
+                <!-- As Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonAs"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Arsenic"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/as" />
+
+                <!-- Sb Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonSb"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Antimony"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/sb" />
+
+                <!-- Te Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonTe"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Tellurium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/te" />
+
+                <!-- At Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonAt"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Astatine"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/at" />
+
+            </GridLayout>
+
+            <!-- Superheavy Elements Section -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/superheavyElementsCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="#D8E9EF"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Superheavy Elements"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/superheavyElementsMnemonic"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="Mighty Dragon Roars, Never Falling. My Little Tiger Organizes"
+                        android:textSize="14sp"
+                        android:textColor="#37474F"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Superheavy Elements Grid -->
+            <GridLayout
+                android:id="@+id/superheavyElementsGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4"
+                android:rowCount="3"
+                android:useDefaultMargins="true"
+                android:visibility="gone"
+                android:layout_marginBottom="32dp">
+
+                <!-- Mt Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonMt"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Meitnerium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/mt" />
+
+                <!-- Ds Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonDs"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Darmstadtium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ds" />
+
+                <!-- Rg Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonRg"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Roentgenium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/rg" />
+
+                <!-- Nh Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonNh"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Nihonium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/nh" />
+
+                <!-- Fl Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonFl"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Flerovium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/fl" />
+
+                <!-- Mc Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonMc"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Moscovium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/mc" />
+
+                <!-- Lv Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonLv"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Livermorium"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/lv" />
+
+                <!-- Ts Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonTs"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Tennessine"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ts" />
+
+                <!-- Og Element -->
+                <ImageButton
+                    android:id="@+id/imageButtonOg"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Oganesson"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/og" />
+
+            </GridLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation View -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:menu="@menu/bottom_nav_menu"
+        app:itemIconTint="@color/bottom_nav_color_selector"
+        app:itemTextColor="@color/bottom_nav_color_selector"
+        app:labelVisibilityMode="labeled" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
