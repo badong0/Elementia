@@ -774,11 +774,11 @@ public class activity_elements extends AppCompatActivity {
                 .create()
                 .show();
     }
-    protected void onResume() {
-        super.onResume();
-        // Ensure Elements is selected when returning to this activity
-        if (bottomNavigationView != null) {
-            bottomNavigationView.setSelectedItemId(R.id.elements);
-        }
-    }
+//    protected void onResume() {
+//        super.onResume();
+//        // Ensure Elements is selected when returning to this activity
+//        if (bottomNavigationView != null) {
+//            bottomNavigationView.setSelectedItemId(R.id.elements);
+//        }
+//    }
 }
