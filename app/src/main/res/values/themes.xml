@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.Elementia" parent="Base.Theme.Elementia" />
+
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
 </resources>
