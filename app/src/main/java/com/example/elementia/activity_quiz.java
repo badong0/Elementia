@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -305,7 +306,7 @@ public class activity_quiz extends AppCompatActivity {
 
         // Auto-advance after 2 seconds if not the last question
         if (currentQuestionIndex < questions.size() - 1) {
-            autoAdvanceHandler = new Handler();
+            autoAdvanceHandler = new Handler(Looper.getMainLooper());
             autoAdvanceRunnable = () -> nextQuestion();
             autoAdvanceHandler.postDelayed(autoAdvanceRunnable, 2000);
         }
@@ -492,7 +493,7 @@ public class activity_quiz extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         showQuitDialog();
     }
-
 }
