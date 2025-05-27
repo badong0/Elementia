@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!-- Element Image -->
+    <ImageView
+        android:id="@+id/elementImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/question" />
+
+    <!-- Element Title -->
+    <TextView
+        android:id="@+id/elementTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hydrogen (H)"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Element Description -->
+    <TextView
+        android:id="@+id/elementDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="The lightest and most abundant element in the universe..."
+        android:textSize="14sp"
+        android:textColor="#666666"
+        android:lineSpacingExtra="4dp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- NEW: Element Trivia -->
+    <TextView
+        android:id="@+id/elementTrivia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="💡 Fun Fact: Hydrogen is so light that it escapes Earth's atmosphere!"
+        android:textSize="14sp"
+        android:textColor="#2E7D32"
+        android:textStyle="italic"
+        android:background="#E8F5E8"
+        android:padding="12dp"
+        android:lineSpacingExtra="2dp" />
+
+</LinearLayout>

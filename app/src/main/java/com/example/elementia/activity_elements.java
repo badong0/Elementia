@@ -2,11 +2,12 @@ package com.example.elementia;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
+
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
+
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -15,15 +16,14 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -96,6 +96,8 @@ public class activity_elements extends AppCompatActivity {
     private TextView metalloidsTitle;
     private TextView superheavyElementsTitle;
 
+    private Map<Integer, String> elementTrivia;
+
     private BottomNavigationView bottomNavigationView;
     private Map<Integer, String> elementDescriptions;
     private boolean isMnemonicsMode = false; // Track current mode
@@ -108,12 +110,8 @@ public class activity_elements extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_elements);
 
-
         // Initialize views
         initializeViews();
-
-        // Set welcome message (you can make this dynamic later)
-        welcomeMessage.setText("Good Day! Tommy!");
 
         // Initialize element descriptions
         initializeElementDescriptions();
@@ -121,6 +119,7 @@ public class activity_elements extends AppCompatActivity {
         // Setup click listeners
         setupSectionClickListeners();
         setupElementClickListeners();
+        initializeElementTrivia();
 
         // Setup mnemonics switch with enhanced functionality
         setupEnhancedMnemonicsSwitch();
@@ -774,18 +773,595 @@ public class activity_elements extends AppCompatActivity {
     }
 
     private void showElementDescription(String elementName, String description) {
+        // Create custom layout for dialog
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_element_description, null);
+
+        ImageView elementImage = dialogView.findViewById(R.id.elementImage);
+        TextView elementTitle = dialogView.findViewById(R.id.elementTitle);
+        TextView elementDescription = dialogView.findViewById(R.id.elementDescription);
+        TextView elementTrivia = dialogView.findViewById(R.id.elementTrivia); // NEW LINE
+
+        // Set the content
+        elementTitle.setText(elementName);
+        elementDescription.setText(description);
+
+        // NEW: Set trivia content
+        String triviaText = getTriviaByElementName(elementName);
+        if (triviaText != null && !triviaText.isEmpty()) {
+            elementTrivia.setText(triviaText);
+            elementTrivia.setVisibility(View.VISIBLE);
+        } else {
+            elementTrivia.setVisibility(View.GONE);
+        }
+
+        // Set the element image based on element name
+        setElementImage(elementImage, elementName);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(elementName)
-                .setMessage(description)
+        builder.setView(dialogView)
                 .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
                 .create()
                 .show();
     }
-//    protected void onResume() {
-//        super.onResume();
-//        // Ensure Elements is selected when returning to this activity
-//        if (bottomNavigationView != null) {
-//            bottomNavigationView.setSelectedItemId(R.id.elements);
-//        }
-//    }
+
+    // Add this new helper method
+    private String getTriviaByElementName(String elementName) {
+        // Safety check: if trivia map is null, return default message
+        if (elementTrivia == null) {
+            return "🌟 Each element has its own unique story in the universe!";
+        }
+
+        // Extract element symbol from name (e.g., "Hydrogen (H)" -> "H")
+        String symbol = elementName.substring(elementName.indexOf("(") + 1, elementName.indexOf(")"));
+
+        // Find the element ID by symbol and return its trivia
+        for (Map.Entry<Integer, String> entry : elementDescriptions.entrySet()) {
+            String entryElementName = entry.getValue().split("\n")[0];
+            if (entryElementName.equals(elementName)) {
+                String trivia = elementTrivia.get(entry.getKey());
+                return trivia != null ? trivia : "🌟 Each element has its own unique story in the universe!";
+            }
+        }
+
+        return "🌟 Each element has its own unique story in the universe!"; // Default trivia
+    }
+
+    private void setElementImage(ImageView imageView, String elementName) {
+        // Extract element symbol from name (e.g., "Hydrogen (H)" -> "H")
+        String symbol = elementName.substring(elementName.indexOf("(") + 1, elementName.indexOf(")"));
+
+        // Map element symbols to drawable resources
+        switch (symbol.toLowerCase()) {
+            // Reactive Nonmetals
+            case "h":
+                imageView.setImageResource(R.drawable.h_image);
+                break;
+            case "c":
+                imageView.setImageResource(R.drawable.c_image);
+                break;
+            case "n":
+                imageView.setImageResource(R.drawable.n_image);
+                break;
+            case "o":
+                imageView.setImageResource(R.drawable.o_image);
+                break;
+            case "f":
+                imageView.setImageResource(R.drawable.f_image);
+                break;
+            case "p":
+                imageView.setImageResource(R.drawable.p_image);
+                break;
+            case "s":
+                imageView.setImageResource(R.drawable.s_image);
+                break;
+            case "cl":
+                imageView.setImageResource(R.drawable.cl_image);
+                break;
+            case "se":
+                imageView.setImageResource(R.drawable.se_image);
+                break;
+            case "br":
+                imageView.setImageResource(R.drawable.br_image);
+                break;
+            case "i":
+                imageView.setImageResource(R.drawable.i_image);
+                break;
+
+            // Noble Gases
+            case "he":
+                imageView.setImageResource(R.drawable.he_image);
+                break;
+            case "ne":
+                imageView.setImageResource(R.drawable.ne_image);
+                break;
+            case "ar":
+                imageView.setImageResource(R.drawable.ar_image);
+                break;
+            case "kr":
+                imageView.setImageResource(R.drawable.kr_image);
+                break;
+            case "xe":
+                imageView.setImageResource(R.drawable.xe_image);
+                break;
+            case "rn":
+                imageView.setImageResource(R.drawable.rn_image);
+                break;
+            case "og": // Oganesson, from superheavy list
+                imageView.setImageResource(R.drawable.og_image);
+                break;
+
+            // Alkali Metals
+            case "li":
+                imageView.setImageResource(R.drawable.li_image);
+                break;
+            case "na":
+                imageView.setImageResource(R.drawable.na_image);
+                break;
+            case "k":
+                imageView.setImageResource(R.drawable.k_image);
+                break;
+            case "rb":
+                imageView.setImageResource(R.drawable.rb_image);
+                break;
+            case "cs":
+                imageView.setImageResource(R.drawable.cs_image);
+                break;
+            case "fr":
+                imageView.setImageResource(R.drawable.fr_image);
+                break;
+
+            // Alkaline Earth Metals
+            case "be":
+                imageView.setImageResource(R.drawable.be_image);
+                break;
+            case "mg":
+                imageView.setImageResource(R.drawable.mg_image);
+                break;
+            case "ca":
+                imageView.setImageResource(R.drawable.ca_image);
+                break;
+            case "sr":
+                imageView.setImageResource(R.drawable.sr_image);
+                break;
+            case "ba":
+                imageView.setImageResource(R.drawable.ba_image);
+                break;
+            case "ra":
+                imageView.setImageResource(R.drawable.ra_image);
+                break;
+
+            // Transition Metals Period 4 (Sc to Cu)
+            case "sc":
+                imageView.setImageResource(R.drawable.sc_image);
+                break;
+            case "ti":
+                imageView.setImageResource(R.drawable.ti_image);
+                break;
+            case "v":
+                imageView.setImageResource(R.drawable.v_image);
+                break;
+            case "cr":
+                imageView.setImageResource(R.drawable.cr_image);
+                break;
+            case "mn":
+                imageView.setImageResource(R.drawable.mn_image);
+                break;
+            case "fe":
+                imageView.setImageResource(R.drawable.fe_image);
+                break;
+            case "co":
+                imageView.setImageResource(R.drawable.co_image);
+                break;
+            case "ni":
+                imageView.setImageResource(R.drawable.ni_image);
+                break;
+            case "cu":
+                imageView.setImageResource(R.drawable.cu_image);
+                break;
+
+            // Transition Metals Period 5 (Y to Ag)
+            case "y":
+                imageView.setImageResource(R.drawable.y_image);
+                break;
+            case "zr":
+                imageView.setImageResource(R.drawable.zr_image);
+                break;
+            case "nb":
+                imageView.setImageResource(R.drawable.nb_image);
+                break;
+            case "mo":
+                imageView.setImageResource(R.drawable.mo_image);
+                break;
+            case "tc":
+                imageView.setImageResource(R.drawable.tc_image);
+                break;
+            case "ru":
+                imageView.setImageResource(R.drawable.ru_image);
+                break;
+            case "rh":
+                imageView.setImageResource(R.drawable.rh_image);
+                break;
+            case "pd":
+                imageView.setImageResource(R.drawable.pd_image);
+                break;
+            case "ag":
+                imageView.setImageResource(R.drawable.ag_image);
+                break;
+
+            // Transition Metals Period 6 (Hf to Au)
+            case "hf":
+                imageView.setImageResource(R.drawable.hf_image);
+                break;
+            case "ta":
+                imageView.setImageResource(R.drawable.ta_image);
+                break;
+            case "w":
+                imageView.setImageResource(R.drawable.w_image);
+                break;
+            case "re":
+                imageView.setImageResource(R.drawable.re_image);
+                break;
+            case "os":
+                imageView.setImageResource(R.drawable.os_image);
+                break;
+            case "ir":
+                imageView.setImageResource(R.drawable.ir_image);
+                break;
+            case "pt":
+                imageView.setImageResource(R.drawable.pt_image);
+                break;
+            case "au":
+                imageView.setImageResource(R.drawable.au_image);
+                break;
+
+            // Transition Metals Period 7 (Rf to Hs)
+            case "rf":
+                imageView.setImageResource(R.drawable.rf_image);
+                break;
+            case "db":
+                imageView.setImageResource(R.drawable.db_image);
+                break;
+            case "sg":
+                imageView.setImageResource(R.drawable.sg_image);
+                break;
+            case "bh":
+                imageView.setImageResource(R.drawable.bh_image);
+                break;
+            case "hs":
+                imageView.setImageResource(R.drawable.hs_image);
+                break;
+
+            // Lanthanides (La to Lu)
+            case "la":
+                imageView.setImageResource(R.drawable.la_image);
+                break;
+            case "ce":
+                imageView.setImageResource(R.drawable.ce_image);
+                break;
+            case "pr":
+                imageView.setImageResource(R.drawable.pr_image);
+                break;
+            case "nd":
+                imageView.setImageResource(R.drawable.nd_image);
+                break;
+            case "pm":
+                imageView.setImageResource(R.drawable.pm_image);
+                break;
+            case "sm":
+                imageView.setImageResource(R.drawable.sm_image);
+                break;
+            case "eu":
+                imageView.setImageResource(R.drawable.eu_image);
+                break;
+            case "gd":
+                imageView.setImageResource(R.drawable.gd_image);
+                break;
+            case "tb":
+                imageView.setImageResource(R.drawable.tb_image);
+                break;
+            case "dy":
+                imageView.setImageResource(R.drawable.dy_image);
+                break;
+            case "ho":
+                imageView.setImageResource(R.drawable.ho_image);
+                break;
+            case "er":
+                imageView.setImageResource(R.drawable.er_image);
+                break;
+            case "tm":
+                imageView.setImageResource(R.drawable.tm_image);
+                break;
+            case "yb":
+                imageView.setImageResource(R.drawable.yb_image);
+                break;
+            case "lu":
+                imageView.setImageResource(R.drawable.lu_image);
+                break;
+
+            // Actinides (Ac to Lr)
+            case "ac":
+                imageView.setImageResource(R.drawable.ac_image);
+                break;
+            case "th":
+                imageView.setImageResource(R.drawable.th_image);
+                break;
+            case "pa":
+                imageView.setImageResource(R.drawable.pa_image);
+                break;
+            case "u":
+                imageView.setImageResource(R.drawable.u_image);
+                break;
+            case "np":
+                imageView.setImageResource(R.drawable.np_image);
+                break;
+            case "pu":
+                imageView.setImageResource(R.drawable.pu_image);
+                break;
+            case "am":
+                imageView.setImageResource(R.drawable.am_image);
+                break;
+            case "cm":
+                imageView.setImageResource(R.drawable.cm_image);
+                break;
+            case "bk":
+                imageView.setImageResource(R.drawable.bk_image);
+                break;
+            case "cf":
+                imageView.setImageResource(R.drawable.cf_image);
+                break;
+            case "es":
+                imageView.setImageResource(R.drawable.es_image);
+                break;
+            case "fm":
+                imageView.setImageResource(R.drawable.fm_image);
+                break;
+            case "md":
+                imageView.setImageResource(R.drawable.md_image);
+                break;
+            case "no":
+                imageView.setImageResource(R.drawable.no_image);
+                break;
+            case "lr":
+                imageView.setImageResource(R.drawable.lr_image);
+                break;
+
+            // Post-Transition Metals (Al, Zn, Ga, Cd, In, Sn, Hg, Tl, Pb, Bi, Po, Cn)
+            case "al":
+                imageView.setImageResource(R.drawable.al_image);
+                break;
+            case "zn":
+                imageView.setImageResource(R.drawable.zn_image);
+                break;
+            case "ga":
+                imageView.setImageResource(R.drawable.ga_image);
+                break;
+            case "cd":
+                imageView.setImageResource(R.drawable.cd_image);
+                break;
+            case "in":
+                imageView.setImageResource(R.drawable.in_image);
+                break;
+            case "sn":
+                imageView.setImageResource(R.drawable.sn_image);
+                break;
+            case "hg":
+                imageView.setImageResource(R.drawable.hg_image);
+                break;
+            case "tl":
+                imageView.setImageResource(R.drawable.tl_image);
+                break;
+            case "pb":
+                imageView.setImageResource(R.drawable.pb_image);
+                break;
+            case "bi":
+                imageView.setImageResource(R.drawable.bi_image);
+                break;
+            case "po":
+                imageView.setImageResource(R.drawable.po_image);
+                break;
+            case "cn":
+                imageView.setImageResource(R.drawable.cn_image);
+                break;
+
+            // Metalloids (B, Si, Ge, As, Sb, Te, At)
+            case "b":
+                imageView.setImageResource(R.drawable.b_image);
+                break;
+            case "si":
+                imageView.setImageResource(R.drawable.si_image);
+                break;
+            case "ge":
+                imageView.setImageResource(R.drawable.ge_image);
+                break;
+            case "as":
+                imageView.setImageResource(R.drawable.as_image);
+                break;
+            case "sb":
+                imageView.setImageResource(R.drawable.sb_image);
+                break;
+            case "te":
+                imageView.setImageResource(R.drawable.te_image);
+                break;
+            case "at":
+                imageView.setImageResource(R.drawable.at_image);
+                break;
+
+            // Superheavy Elements (Mt, Ds, Rg, Nh, Fl, Mc, Lv, Ts, Og)
+            case "mt":
+                imageView.setImageResource(R.drawable.mt_image);
+                break;
+            case "ds":
+                imageView.setImageResource(R.drawable.ds_image);
+                break;
+            case "rg":
+                imageView.setImageResource(R.drawable.rg_image);
+                break;
+            case "nh":
+                imageView.setImageResource(R.drawable.nh_image);
+                break;
+            case "fl":
+                imageView.setImageResource(R.drawable.fl_image);
+                break;
+            case "mc":
+                imageView.setImageResource(R.drawable.mc_image);
+                break;
+            case "lv":
+                imageView.setImageResource(R.drawable.lv_image);
+                break;
+            case "ts":
+                imageView.setImageResource(R.drawable.ts_image);
+                break;
+
+            default:
+                imageView.setImageResource(R.drawable.question); // Default fallback pag walang picture
+                break;
+        }
+    }
+
+    private void initializeElementTrivia() {
+        elementTrivia = new HashMap<>();
+
+        // Reactive Nonmetals - Fun trivia facts
+        elementTrivia.put(R.id.imageButtonH, "💡 Fun Fact: Hydrogen is so light that it escapes Earth's atmosphere and is constantly being lost to space!");
+        elementTrivia.put(R.id.imageButtonC, "🌟 Amazing: A single carbon atom can form up to 4 bonds, making it the backbone of all life on Earth!");
+        elementTrivia.put(R.id.imageButtonN, "⚡ Cool: Lightning converts nitrogen in the air into compounds that plants can use as fertilizer!");
+        elementTrivia.put(R.id.imageButtonO, "🔥 Wow: Oxygen makes things burn, but it doesn't burn itself - it's the supporter, not the fuel!");
+        elementTrivia.put(R.id.imageButtoF, "⚠️ Extreme: Fluorine is so reactive it can make sand catch fire and burn through glass!");
+        elementTrivia.put(R.id.imageButtonP, "💀 Creepy: White phosphorus glows in the dark and was once used to make matches that could ignite by friction!");
+        elementTrivia.put(R.id.imageButtonS, "🌋 Hot: Sulfur creates the rotten egg smell and forms beautiful yellow crystals near volcanoes!");
+        elementTrivia.put(R.id.imageButtonCl, "🏊 Essential: Chlorine kills bacteria in swimming pools, but too much can turn your hair green!");
+        elementTrivia.put(R.id.imageButtonSe, "🌙 Lunar: Selenium's electrical conductivity changes dramatically with light exposure!");
+        elementTrivia.put(R.id.imageButtonBr, "🌊 Salty: Bromine gets its name from 'bromos' meaning stench - it really smells bad!");
+        elementTrivia.put(R.id.imageButtonI, "🦋 Purple: When heated, iodine skips the liquid phase and goes straight from solid to purple gas!");
+
+        // Noble Gases - Inert but interesting
+        elementTrivia.put(R.id.imageButtonHe, "🎈 Light: Helium makes balloons float and your voice squeaky because sound travels faster through it!");
+        elementTrivia.put(R.id.imageButtonNe, "🌃 Bright: Neon signs glow orange-red naturally - other colors need different gases or coatings!");
+        elementTrivia.put(R.id.imageButtonAr, "🔥 Safe: Argon is used in light bulbs because it won't react with the hot tungsten filament!");
+        elementTrivia.put(R.id.imageButtonKr, "🦸 Super: Krypton was named after the Greek word for 'hidden' - just like Superman's home planet!");
+        elementTrivia.put(R.id.imageButtonXe, "💤 Sleepy: Xenon can be used as an anesthetic and makes an incredibly bright camera flash!");
+        elementTrivia.put(R.id.imageButtonRn, "☢️ Dangerous: Radon is the second leading cause of lung cancer after smoking!");
+
+        // Alkali Metals - Explosive personalities
+        elementTrivia.put(R.id.imageButtonLi, "🔋 Energetic: Your phone battery probably contains lithium - it's the secret to long-lasting power!");
+        elementTrivia.put(R.id.imageButtonNa, "💥 Explosive: Sodium explodes violently in water, creating hydrogen gas and lots of heat!");
+        elementTrivia.put(R.id.imageButtonK, "🍌 Healthy: Bananas are radioactive because of their potassium content - but don't worry, it's harmless!");
+        elementTrivia.put(R.id.imageButtonRb, "⏰ Precise: Rubidium atomic clocks are so accurate they won't lose a second in 300 million years!");
+        elementTrivia.put(R.id.imageButtonCs, "📏 Standard: One second is officially defined by cesium atoms vibrating 9,192,631,770 times!");
+        elementTrivia.put(R.id.imageButtonFr, "👻 Rare: At any given moment, there are probably only 20-30 grams of francium on entire Earth!");
+
+        // Alkaline Earth Metals
+        elementTrivia.put(R.id.imageButtonBe, "💎 Precious: Beryl containing beryllium creates emeralds and aquamarines - some of the most valuable gems!");
+        elementTrivia.put(R.id.imageButtonMg, "📸 Flash: Magnesium burns with such a bright white light it was used in old camera flash bulbs!");
+        elementTrivia.put(R.id.imageButtonCa, "🦴 Strong: Your bones and teeth are essentially calcium carbonate warehouses!");
+        elementTrivia.put(R.id.imageButtonSr, "🎆 Red: Strontium creates the brilliant red colors in fireworks and emergency flares!");
+        elementTrivia.put(R.id.imageButtonBa, "🩻 Medical: You drink barium sulfate before X-rays so doctors can see your digestive system!");
+        elementTrivia.put(R.id.imageButtonRa, "☢️ Glow: Radium was once used in glow-in-the-dark paint until people realized it was deadly!");
+
+        // Transition Metals Period 4
+        elementTrivia.put(R.id.imageButtonSc, "💡 Bright: Scandium is used in bright stadium lights!");
+        elementTrivia.put(R.id.imageButtonTi, "🚀 Aerospace: Titanium is strong as steel but 45% lighter - perfect for spacecraft!");
+        elementTrivia.put(R.id.imageButtonV, "🚴 Stiff: Vanadium strengthens steel and is used in bike frames for its stiffness!");
+        elementTrivia.put(R.id.imageButtonCr, "✨ Shiny: Chromium gives stainless steel its shine and resistance to rust!");
+        elementTrivia.put(R.id.imageButtonMn, "💪 Tough: Manganese makes steel tougher and is essential for bone development!");
+        elementTrivia.put(R.id.imageButtonFe, "🩸 Life: Iron in your blood carries oxygen, and iron in Earth's core creates our magnetic field!");
+        elementTrivia.put(R.id.imageButtonCo, "💙 Blue: Cobalt creates beautiful blue pigments in glass and paints!");
+        elementTrivia.put(R.id.imageButtonNi, "💰 Coins: Nickel is used in many coins and is highly resistant to corrosion!");
+        elementTrivia.put(R.id.imageButtonCu, "🔌 Conductor: Copper conducts electricity so well that most electrical wiring is made from it!");
+        elementTrivia.put(R.id.imageButtonZn, "🛡️ Protective: Zinc protects steel from rusting and is vital for your immune system!");
+
+        // Transition Metals Period 5
+        elementTrivia.put(R.id.imageButtonY, "📺 Colors: Yttrium is used to make the red color in older TV screens!");
+        elementTrivia.put(R.id.imageButtonZr, "💎 Cubic: Zirconium is the base for cubic zirconia, a popular diamond substitute!");
+        elementTrivia.put(R.id.imageButtonNb, "🚄 Super: Niobium is used in superconducting magnets for MRI machines and high-speed trains!");
+        elementTrivia.put(R.id.imageButtonMo, "🌱 Essential: Molybdenum is essential for plants and animals, helping enzymes function!");
+        elementTrivia.put(R.id.imageButtonTc, "🌌 Cosmic: Technetium is the lightest element with no stable isotopes and is found in red giant stars!");
+        elementTrivia.put(R.id.imageButtonRu, "🖊️ Durable: Ruthenium makes pen nibs and electrical contacts extremely durable!");
+        elementTrivia.put(R.id.imageButtonRh, "🚗 Clean: Rhodium is a key component in catalytic converters, cleaning car exhaust!");
+        elementTrivia.put(R.id.imageButtonPd, "💍 Jewelry: Palladium is a popular, lightweight alternative to platinum for jewelry!");
+        elementTrivia.put(R.id.imageButtonAg, "🦠 Antibacterial: Silver naturally kills bacteria, which is why wealthy people used silver utensils!");
+        elementTrivia.put(R.id.imageButtonCd, "🔋 Recharge: Cadmium was once used in rechargeable batteries, but now it's mostly in solar cells!");
+
+        // Transition Metals Period 6
+        elementTrivia.put(R.id.imageButtonLa, "📸 Lenses: Lanthanum is used in camera lenses for its high refractive index!");
+        elementTrivia.put(R.id.imageButtonHf, "🚀 Rockets: Hafnium is used in rocket nozzles because it has an incredibly high melting point!");
+        elementTrivia.put(R.id.imageButtonTa, "📱 Mini: Tantalum is used in tiny capacitors found in nearly every electronic device!");
+        elementTrivia.put(R.id.imageButtonW, "💡 Filament: Tungsten has the highest melting point of all metals, making it perfect for light bulb filaments!");
+        elementTrivia.put(R.id.imageButtonRe, "🛰️ Space: Rhenium is one of the densest metals and is used in superalloys for jet engines and rockets!");
+        elementTrivia.put(R.id.imageButtonOs, "✒️ Hard: Osmium is the densest naturally occurring element and is used in fountain pen nibs!");
+        elementTrivia.put(R.id.imageButtonIr, "🌠 Asteroid: Iridium is exceptionally corrosion-resistant and is found in meteorites!");
+        elementTrivia.put(R.id.imageButtonPt, "💎 Precious: Platinum is even rarer and more valuable than gold, often used in fine jewelry!");
+        elementTrivia.put(R.id.imageButtonAu, "👑 Eternal: Gold doesn't rust, tarnish, or corrode - it stays shiny forever!");
+        elementTrivia.put(R.id.imageButtonHg, "🌡️ Liquid: Mercury is the only metal that is liquid at room temperature!");
+
+        // Post-Transition Metals
+        elementTrivia.put(R.id.imageButtonAl, "♻️ Recyclable: Aluminum can be recycled indefinitely without losing quality - most cans are 70% recycled!");
+        elementTrivia.put(R.id.imageButtonGa, "🖐️ Melting: Gallium melts in your hand, making it a popular science trick!");
+        elementTrivia.put(R.id.imageButtonIn, "💡 Screens: Indium is used to make transparent conductive coatings for touchscreens and solar panels!");
+        elementTrivia.put(R.id.imageButtonSn, "🥫 Cans: Tin is used as a protective coating for steel cans, preventing rust!");
+        elementTrivia.put(R.id.imageButtonTl, "🧪 Poison: Thallium is a highly toxic heavy metal once used in rat poison!");
+        elementTrivia.put(R.id.imageButtonPb, "☢️ Shield: Lead is excellent at blocking radiation, but it's toxic, so its use has declined!");
+        elementTrivia.put(R.id.imageButtonBi, "🔥 Fire: Bismuth has a low melting point and is used in fire sprinklers and fuses!");
+        elementTrivia.put(R.id.imageButtonPo, "⚡ Static: Polonium is highly radioactive and was used to remove static electricity in textile mills!");
+
+        // Metalloids
+        elementTrivia.put(R.id.imageButtonB, "🌱 Green: Boron is essential for plant growth and is found in borax laundry detergent!");
+        elementTrivia.put(R.id.imageButtonSi, "💻 Digital: Silicon chips in your computer contain transistors smaller than viruses!");
+        elementTrivia.put(R.id.imageButtonGe, "💡 Early: Germanium was used in early transistors before silicon became more common!");
+        elementTrivia.put(R.id.imageButtonAs, "☠️ Historic: Arsenic is famously poisonous and was historically used in pigments and medicines!");
+        elementTrivia.put(R.id.imageButtonSb, "👁️‍🗨️ Ancient: Antimony was used by ancient Egyptians as an eyeliner called kohl!");
+        elementTrivia.put(R.id.imageButtonTe, " thermoelectric: Tellurium can convert heat directly into electricity!");
+
+        // Lanthanides (Rare Earth Elements)
+        elementTrivia.put(R.id.imageButtonCe, "💡 Lighter: Cerium is used in self-cleaning ovens and mischmetal for lighter flints!");
+        elementTrivia.put(R.id.imageButtonPr, "👓 Goggles: Praseodymium is used in welding goggles to filter out intense yellow light!");
+        elementTrivia.put(R.id.imageButtonNd, "🧲 Strong: Neodymium makes incredibly strong magnets used in headphones and wind turbines!");
+        elementTrivia.put(R.id.imageButtonPm, "⏱️ Glow: Promethium is radioactive and glows, used in some specialized luminous paints!");
+        elementTrivia.put(R.id.imageButtonSm, "🛡️ Neutron: Samarium is a strong neutron absorber, used in nuclear reactor control rods!");
+        elementTrivia.put(R.id.imageButtonEu, "🔴 Red: Europium creates the vibrant red color in TV screens and fluorescent lamps!");
+        elementTrivia.put(R.id.imageButtonGd, " MRI: Gadolinium enhances MRI images, making them clearer for medical diagnosis!");
+        elementTrivia.put(R.id.imageButtonTb, "💡 Green: Terbium creates the bright green color in fluorescent lamps and some lasers!");
+        elementTrivia.put(R.id.imageButtonDy, "🖨️ CD: Dysprosium is used in data storage devices like CDs and hard drives!");
+        elementTrivia.put(R.id.imageButtonHo, "🔬 Lasers: Holmium has the strongest magnetic moment of any naturally occurring element and is used in lasers!");
+        elementTrivia.put(R.id.imageButtonEr, "🌐 Fiber: Erbium is crucial for optical fibers, amplifying signals over long distances for the internet!");
+        elementTrivia.put(R.id.imageButtonTm, "💡 Portable: Thulium is used in portable X-ray devices due to its soft gamma rays!");
+        elementTrivia.put(R.id.imageButtonYb, "⏰ Atomic: Ytterbium atomic clocks are incredibly precise, losing only a second every billion years!");
+        elementTrivia.put(R.id.imageButtonLu, "🩺 Imaging: Lutetium is used in PET scans for medical imaging and cancer detection!");
+
+        // Actinides (Most are radioactive)
+        elementTrivia.put(R.id.imageButtonTh, "💡 Bright: Thorium is used in gas lantern mantles, giving off a bright white light!");
+        elementTrivia.put(R.id.imageButtonPa, "🧪 Rare: Protactinium is one of the rarest and most expensive naturally occurring elements!");
+        elementTrivia.put(R.id.imageButtonU, "⚡ Powerful: One uranium pellet the size of a fingertip contains as much energy as a ton of coal!");
+        elementTrivia.put(R.id.imageButtonNp, "🔫 Weapons: Neptunium is produced in nuclear reactors and can be used in nuclear weapons!");
+        elementTrivia.put(R.id.imageButtonPu, "💀 Toxic: Plutonium is so toxic that a speck smaller than a grain of sand could be lethal!");
+        elementTrivia.put(R.id.imageButtonAm, " smoke: Americium is used in most household smoke detectors!");
+        elementTrivia.put(R.id.imageButtonCm, "🔬 Research: Curium is highly radioactive and primarily used for scientific research!");
+        elementTrivia.put(R.id.imageButtonBk, "🔬 Lab: Berkelium was the fifth transuranic element discovered and is purely synthetic!");
+        elementTrivia.put(R.id.imageButtonCf, " нейтрон: Californium is a strong neutron emitter, used in cancer treatment and for starting nuclear reactors!");
+        elementTrivia.put(R.id.imageButtonEs, "🌌 Cosmos: Einsteinium was discovered in the debris of the first hydrogen bomb explosion!");
+        elementTrivia.put(R.id.imageButtonFm, "🔬 Synthetic: Fermium is the heaviest element that can be formed by neutron bombardment!");
+        elementTrivia.put(R.id.imageButtonMd, "🔬 Discovery: Mendelevium was the first element discovered atom by atom!");
+        elementTrivia.put(R.id.imageButtonNo, "🔬 Lab: Nobelium is a synthetic radioactive element named after Alfred Nobel!");
+        elementTrivia.put(R.id.imageButtonLr, "🔬 Heaviest: Lawrencium is the heaviest actinide and is also purely synthetic!");
+
+        // Superheavy Elements (Synthetic, highly unstable)
+        elementTrivia.put(R.id.imageButtonRf, "🔬 Synthetic: Rutherfordium was named after Ernest Rutherford, the father of nuclear physics!");
+        elementTrivia.put(R.id.imageButtonDb, "🔬 Lab: Dubnium was named after Dubna, Russia, a major nuclear research center!");
+        elementTrivia.put(R.id.imageButtonSg, "🔬 Lab: Seaborgium was named after Glenn T. Seaborg, a Nobel Prize-winning chemist!");
+        elementTrivia.put(R.id.imageButtonBh, "🔬 Lab: Bohrium was named after Niels Bohr, the famous physicist!");
+        elementTrivia.put(R.id.imageButtonHs, "🔬 Lab: Hassium was named after the German state of Hesse, where it was first synthesized!");
+        elementTrivia.put(R.id.imageButtonMt, "🔬 Lab: Meitnerium was named after Lise Meitner, a pioneering physicist!");
+        elementTrivia.put(R.id.imageButtonDs, "🔬 Lab: Darmstadtium was named after Darmstadt, Germany, where it was first synthesized!");
+        elementTrivia.put(R.id.imageButtonRg, "🔬 Lab: Roentgenium was named after Wilhelm Conrad Röntgen, discoverer of X-rays!");
+        elementTrivia.put(R.id.imageButtonCn, "🔬 Lab: Copernicium was named after Nicolaus Copernicus, the astronomer!");
+        elementTrivia.put(R.id.imageButtonNh, "🔬 Lab: Nihonium is named after 'Nihon', one of the two ways to say Japan in Japanese!");
+        elementTrivia.put(R.id.imageButtonFl, "🔬 Lab: Flerovium was named after the Flerov Laboratory of Nuclear Reactions in Russia!");
+        elementTrivia.put(R.id.imageButtonMc, "🔬 Lab: Moscovium is named after the Moscow region of Russia!");
+        elementTrivia.put(R.id.imageButtonLv, "🔬 Lab: Livermorium is named after the Lawrence Livermore National Laboratory in the USA!");
+        elementTrivia.put(R.id.imageButtonTs, "🔬 Lab: Tennessine is named after Tennessee, USA, where Oak Ridge National Laboratory is located!");
+        elementTrivia.put(R.id.imageButtonOg, "🔬 Lab: Oganesson is named after Yuri Oganessian, a leading researcher in superheavy elements!");
+
+    }
+
 }

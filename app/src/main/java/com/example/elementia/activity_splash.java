@@ -3,9 +3,6 @@ package com.example.elementia;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,13 +31,20 @@ public class activity_splash extends AppCompatActivity {
         initializeViews();
         startAnimations();
 
-        // Navigate to main activity after 3 seconds
+        // Navigate to welcome activity after 3 seconds
         handler = new Handler();
         handler.postDelayed(() -> {
-            Intent intent = new Intent(activity_splash.this, activity_elements.class);
-            startActivity(intent);
-            finish();
+            navigateToWelcomeScreen();
         }, 3000);
+    }
+
+    private void navigateToWelcomeScreen() {
+        Intent intent = new Intent(activity_splash.this, activity_welcome.class);
+        startActivity(intent);
+        finish();
+
+        // Add smooth transition
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     private void initializeViews() {
@@ -50,21 +54,37 @@ public class activity_splash extends AppCompatActivity {
     }
 
     private void startAnimations() {
-        // Logo fade in and scale animation
-        Animation logoAnimation = AnimationUtils.loadAnimation(this, R.anim.logo_animation);
-        logoImage.startAnimation(logoAnimation);
+        // Logo animation
+        if (logoImage != null) {
+            logoImage.setAlpha(0f);
+            logoImage.animate()
+                    .alpha(1f)
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .setDuration(1000)
+                    .setStartDelay(200)
+                    .start();
+        }
 
-        // Welcome text slide up animation
-        Animation welcomeAnimation = AnimationUtils.loadAnimation(this, R.anim.welcome_animation);
-        welcomeText.startAnimation(welcomeAnimation);
+        // Welcome text animation
+        if (welcomeText != null) {
+            welcomeText.setAlpha(0f);
+            welcomeText.animate()
+                    .alpha(1f)
+                    .setDuration(1000)
+                    .setStartDelay(500)
+                    .start();
+        }
 
-        // App name text fade in animation (delayed)
-        Animation appNameAnimation = AnimationUtils.loadAnimation(this, R.anim.app_name_animation);
-        handler = new Handler();
-        handler.postDelayed(() -> {
-            appNameText.setVisibility(android.view.View.VISIBLE);
-            appNameText.startAnimation(appNameAnimation);
-        }, 800);
+        // App name text animation
+        if (appNameText != null) {
+            appNameText.setAlpha(0f);
+            appNameText.animate()
+                    .alpha(1f)
+                    .setDuration(1000)
+                    .setStartDelay(1000)
+                    .start();
+        }
     }
 
     @Override
@@ -73,16 +93,5 @@ public class activity_splash extends AppCompatActivity {
         if (handler != null) {
             handler.removeCallbacksAndMessages(null);
         }
-    }
-    private void startLoadingDotsAnimation() {
-        View dot1 = findViewById(R.id.dot1);
-        View dot2 = findViewById(R.id.dot2);
-        View dot3 = findViewById(R.id.dot3);
-
-        Animation pulseAnimation = AnimationUtils.loadAnimation(this, R.anim.pulse_animation);
-
-        handler.postDelayed(() -> dot1.startAnimation(pulseAnimation), 1500);
-        handler.postDelayed(() -> dot2.startAnimation(pulseAnimation), 1700);
-        handler.postDelayed(() -> dot3.startAnimation(pulseAnimation), 1900);
     }
 }

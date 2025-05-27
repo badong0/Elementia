@@ -6,88 +6,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity_splash">
-    <!-- Logo Image -->
-
-    <!-- Welcome Text -->
-
-    <!-- App Name -->
-
-    <!-- Loading dots (optional) -->
 
     <ImageView
         android:id="@+id/logoImage"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="68dp"
+        android:layout_width="176dp"
+        android:layout_height="176dp"
         android:alpha="0"
-        android:src="@drawable/ic_elements"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appNameText" />
-
-    <TextView
-        android:id="@+id/welcomeText"
-        android:layout_width="236dp"
-        android:layout_height="69dp"
-        android:layout_marginTop="160dp"
-        android:fontFamily="sans-serif-light"
-        android:text="Welcome to"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/appNameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="216dp"
-        android:fontFamily="sans-serif"
-        android:letterSpacing="0.1"
-        android:text="ELEMENTIA"
-        android:textColor="@android:color/white"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        android:visibility="invisible"
+        android:background="#ffffff"
+        android:src="@drawable/elementialogo"
+        app:layout_constraintBottom_toTopOf="@+id/appNameText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.454" />
+
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="353dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:text="ELEMENTIA "
+        android:letterSpacing="0.1"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoImage" />
+
+    <TextView
+        android:id="@+id/appNameText"
+        android:layout_width="343dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="424dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="Explore the Periodic Table Like Never Before!"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.426"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="49dp"
-        android:layout_height="17dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.048"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022">
 
-        <View
-            android:id="@+id/dot1"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/loading_dot" />
-
-        <View
-            android:id="@+id/dot2"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/loading_dot" />
-
-        <View
-            android:id="@+id/dot3"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/loading_dot" />
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

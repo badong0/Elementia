@@ -25,6 +25,11 @@
             </intent-filter>
         </activity>
 
+        <!-- Welcome Activity - for first time users only -->
+        <activity
+            android:name=".activity_welcome"
+            android:exported="false" />
+
 
         <activity
             android:name=".activity_difficulty"
@@ -37,8 +42,7 @@
             android:exported="false" />
         <activity
             android:name=".activity_elements"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
     </application>
 
 </manifest>
