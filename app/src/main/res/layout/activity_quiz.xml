@@ -9,12 +9,15 @@
     tools:context=".activity_quiz">
 
     <!-- Quit Button -->
+
+    <!-- Progress Bar -->
+
     <Button
         android:id="@+id/quitButton"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/quit_button_background"
         android:text="Quit"
         android:textColor="@android:color/white"
@@ -22,7 +25,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Progress Bar -->
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"

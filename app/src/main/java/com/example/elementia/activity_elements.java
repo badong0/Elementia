@@ -98,19 +98,16 @@ public class activity_elements extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     private Map<Integer, String> elementDescriptions;
-    private boolean isMnemonicsMode = true; // Track current mode
+    private boolean isMnemonicsMode = false; // Track current mode
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_elements);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
         // Initialize views
         initializeViews();
@@ -429,6 +426,16 @@ public class activity_elements extends AppCompatActivity {
     }
 
     private void setupEnhancedMnemonicsSwitch() {
+        // Set initial state to match isMnemonicsMode
+        mnemonicsSwitch.setChecked(isMnemonicsMode);
+
+        // Apply initial state
+        if (isMnemonicsMode) {
+            switchToMnemonicsMode();
+        } else {
+            switchToReferenceMode();
+        }
+
         mnemonicsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

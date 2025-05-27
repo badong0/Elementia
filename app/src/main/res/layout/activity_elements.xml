@@ -79,7 +79,7 @@
             android:id="@+id/mnemonicsSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true" />
+            android:checked="false" />
 
     </LinearLayout>
 
@@ -90,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="@font/inter_semibold"
         android:text="Welcome to Elementia!"
         android:textColor="@android:color/black"
@@ -2125,7 +2125,10 @@
             </GridLayout>
         </LinearLayout>
     </ScrollView>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView" />
     <!-- Bottom Navigation View -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"

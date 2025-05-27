@@ -30,29 +30,17 @@ public class activity_difficulty extends AppCompatActivity {
 
         try {
             super.onCreate(savedInstanceState);
-
-
             setContentView(R.layout.activity_difficulty);
-
-
-            // // DOUBLE CHECK THIS, KUNG GUMANA PAG WALA, COMMENT, PERO PAG NAG ERROR, UNCOMMENT TO
-            ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-                return insets;
-            });
 
         } catch (Exception e) {
             Log.e("DifficultyDebug", "CRASH in onCreate: " + e.getMessage());
             e.printStackTrace();
         }
-        // Comment out everything else for now
-
-    ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-        Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-        v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-        return insets;
-    });
+//    ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+//        Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+//        v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+//        return insets;
+//    });
 
     initializeViews();
     setupDifficultyButtons();
